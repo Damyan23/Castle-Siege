@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 947a9c0880d5b924b9b3bef659ec4856, type: 3}
+  m_Name: LightingStatusEffect
+  m_EditorClassIdentifier: 
+  statusEffectType: 2
+  activationThreshold: 5
+  thresholdReductionMultiplier: 1
+  thresholdReductionEverySecond: 1
+  actriveDuration: 4
+  visualEffectPrefab: {fileID: 1692517446758730, guid: 08fd1b80cc24cc8439f45fda3c558255,
+    type: 3}
+  isBuildUpOnlyShown: 0
+  isEffectActive: 0
+  tickInterval: 0.5
+  slowFactor: 0
