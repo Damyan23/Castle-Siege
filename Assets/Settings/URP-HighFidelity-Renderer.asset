@@ -20,7 +20,7 @@ MonoBehaviour:
     Source: 1
     NormalSamples: 1
     Intensity: 3
-    DirectLightingStrength: 0.25
+    DirectLightingStrength: 1
     Radius: 0.035
     Samples: 1
     BlurQuality: 0
@@ -94,7 +94,8 @@ MonoBehaviour:
   - {fileID: 4432268582443927068}
   - {fileID: -8056560484359855414}
   - {fileID: 6175792859115195848}
-  m_RendererFeatureMap: cf5797d7c8626fe1542ee9828d25fab31cc6b1e5ca94823dca2248caec583190c88df475e2d2b455
+  - {fileID: 0}
+  m_RendererFeatureMap: cf5797d7c8626fe1542ee9828d25fab31cc6b1e5ca94823dca2248caec583190c88df475e2d2b455d2ae6c5f6a926f5c
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -207,3 +208,17 @@ MonoBehaviour:
   m_Active: 1
   renderPass: 550
   passIndex: 0
+--- !u!114 &6660703359469399762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18614b0a20dacfa4a96a066e01720bd8, type: 3}
+  m_Name: Volumetric Light
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  settings: {material: {fileID: 0}, renderPassEvent: 600}

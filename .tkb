@@ -1,0 +1,36 @@
+{
+  "scope": "Workspace",
+  "tasks": {
+    "task-faFZTKRu2Tcjz-M8HzQkl": {
+      "id": "task-faFZTKRu2Tcjz-M8HzQkl",
+      "description": "PathGenerator:\n- Figure out how to use the heat map to generate a more interesting path.\n\n- Figure out how to generate several different paths. One way would be to incures the weight to maximum on most of the hexes that are already in a path, this way there is a chance of usign that hex but its way too small, so that can create some interesting paths.",
+      "columnId": "column-todo"
+    },
+    "1bGzpp_IiXyrGmGt-sDX-": {
+      "id": "1bGzpp_IiXyrGmGt-sDX-",
+      "description": "WeightMap:\n- Figure out how to make the water body like a river, maybe add some variaty? Some bodies are like a lake, others are rivers?",
+      "columnId": "column-todo",
+      "color": "#80808000"
+    }
+  },
+  "columns": [
+    {
+      "id": "column-todo",
+      "title": "To do",
+      "tasksIds": [
+        "task-faFZTKRu2Tcjz-M8HzQkl",
+        "1bGzpp_IiXyrGmGt-sDX-"
+      ]
+    },
+    {
+      "id": "column-doing",
+      "title": "Doing",
+      "tasksIds": []
+    },
+    {
+      "id": "column-done",
+      "title": "Done",
+      "tasksIds": []
+    }
+  ]
+}
