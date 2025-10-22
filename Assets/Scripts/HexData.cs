@@ -1,10 +1,25 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Il2Cpp;
 using UnityEngine;
 
 public class HexData : MonoBehaviour
 {
-    [HideInInspector] public GameObject[,] grid;
+    public enum Direction
+    {
+        Right,
+        UpRight,
+        UpLeft,
+        Left,
+        DownLeft,
+        DownRight
+    }
+    [HideInInspector] public int GridX;
+    [HideInInspector] public int GridY;
+    [HideInInspector] public GameObject[,] Grid;
+
+    [HideInInspector] public HexData Parent;
 
     [SerializeField, Range(0f, 1f)]
     private float weight = 0f;
@@ -15,18 +30,34 @@ public class HexData : MonoBehaviour
         set => weight = Mathf.Clamp(value, 0f, 1f);
     }
 
-    public List<GameObject> getNeighbours()
-    {
-        List<GameObject> neighbours = new();
+    public float GCost = 0;
+    public float HCost = 0;
 
-        Vector2Int gridPos = FindGridPosition(gameObject, grid);
-        if (gridPos.x == -1)
+    public float FCost
+    {
+        get { return (GCost + HCost) * weight; }
+    }
+
+
+    [HideInInspector] public bool IsPath;
+    [HideInInspector] public bool IsWater
+    {
+        get
+        {
+            return weight == 1;
+        }
+    }
+
+
+    public List<HexData> GetNeighbours()
+    {
+        List<HexData> neighbours = new();
+
+        if (GridX == -1)
         {
             Debug.LogError($"GameObject {gameObject.name} not found in grid!");
             return neighbours;
         }
-
-        bool isEvenColumn = gridPos.x % 2 == 0;
 
         // Odd-r layout (flat-topped hexes, row offset)
         int[,] evenRowOffsets = new int[,]
@@ -51,20 +82,20 @@ public class HexData : MonoBehaviour
 
 
 
-        bool isEvenRow = gridPos.y % 2 == 0;
+        bool isEvenRow = GridY % 2 == 0;
         int[,] offsets = isEvenRow ? evenRowOffsets : oddRowOffsets;
 
 
         for (int i = 0; i < offsets.GetLength(0); i++)
         {
-            int nx = gridPos.x + offsets[i, 0];
-            int ny = gridPos.y + offsets[i, 1];
+            int nx = GridX + offsets[i, 0];
+            int ny = GridY + offsets[i, 1];
 
-            if (nx >= 0 && ny >= 0 && nx < grid.GetLength(0) && ny < grid.GetLength(1))
+            if (nx >= 0 && ny >= 0 && nx < Grid.GetLength(0) && ny < Grid.GetLength(1))
             {
-                if (grid[nx, ny] != null)
+                if (Grid[nx, ny] != null)
                 {
-                    neighbours.Add(grid[nx, ny]);
+                    neighbours.Add(Grid[nx, ny].GetComponent<HexData>());
                 }
                 else continue;
             }
@@ -73,18 +104,45 @@ public class HexData : MonoBehaviour
         return neighbours;
     }
 
-    private Vector2Int FindGridPosition(GameObject hex, GameObject[,] grid)
+    public Direction GetNeighbourDirection(HexData neighbour)
     {
-        for (int x = 0; x < grid.GetLength(0); x++)
+        int[,] evenRowOffsets = new int[,]
         {
-            for (int y = 0; y < grid.GetLength(1); y++)
+            {+1, 0},   // Right
+            {0, -1},   // UpLeft
+            {-1, -1},  // UpRight
+            {-1, 0},   // Left
+            {-1, +1},  // DownLeft
+            {0, +1}    // DownRight
+        };
+
+        int[,] oddRowOffsets = new int[,]
+        {
+            {+1, 0},   // Right
+            {+1, -1},  // UpRight
+            {0, -1},   // UpLeft
+            {-1, 0},   // Left
+            {0, +1},   // DownLeft
+            {+1, +1}   // DownRight
+        };
+
+        bool isEvenRow = GridY % 2 == 0;
+        int[,] offsets = isEvenRow ? evenRowOffsets : oddRowOffsets;
+
+        int distX = neighbour.GridX -GridX;
+        int distY = neighbour.GridY - GridY;
+
+        for (int i = 0; i < offsets.GetLength(0); i++)
+        {
+            int nx = offsets[i, 0];
+            int ny = offsets[i, 1];
+
+            if (distX == nx && distY == ny)
             {
-                if (grid[x, y] == hex)
-                {
-                    return new Vector2Int(x, y);
-                }
+                return (Direction)i;
             }
         }
-        return new Vector2Int(-1, -1); // Not found
+
+        return Direction.Right;
     }
 }

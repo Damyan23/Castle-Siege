@@ -171,12 +171,35 @@ MonoBehaviour:
     type: 3}
   mapWidth: 13
   mapHeight: 15
+  hexTilesPrefabs:
+    startPath:
+      insideTile: {fileID: 0}
+      outsideTile: {fileID: 0}
+    straightPath:
+      insideTile: {fileID: 919132149155446097, guid: cf69f658aafc7254982ad8ec645396b8,
+        type: 3}
+      outsideTile: {fileID: 919132149155446097, guid: 0f565784ec87cf2439b6d28ea7a3e137,
+        type: 3}
+    diagonalPath:
+      insideTile: {fileID: 919132149155446097, guid: 81fc040ceb0808946aa7e822e6de0431,
+        type: 3}
+      outsideTile: {fileID: 919132149155446097, guid: 274f12b4abcb84544b436473dd5a923d,
+        type: 3}
+    perpendiculatPath:
+      insideTile: {fileID: 919132149155446097, guid: 25e9167ebd3658440b27392b4b8984f0,
+        type: 3}
+      outsideTile: {fileID: 919132149155446097, guid: 41060e2ec7cd9ff44b139888f045d139,
+        type: 3}
+    waterTile:
+      insideTile: {fileID: 919132149155446097, guid: fd6bcb943caea1643aedf2acacc4eb96,
+        type: 3}
+      outsideTile: {fileID: 0}
   startHex: {x: 0, y: 0}
-  endHex: {x: 5, y: 7}
-  numberOfPaths: 1
-  path: []
-  numberOfWaterTiles: 2
-  maxLengthOfWaterBody: 20
+  endHex: {x: 9, y: 9}
+  NumberOfPaths: 0
+  Path: []
+  NumberOfWaterTiles: 1
+  MaxLengthOfWaterBody: 5
 --- !u!1 &1760632771
 GameObject:
   m_ObjectHideFlags: 0

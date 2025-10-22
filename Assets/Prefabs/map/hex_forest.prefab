@@ -45,6 +45,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cecbb32d5b92c6d468182068866db9ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GridX: 0
+  GridY: 0
+  Parent: {fileID: 0}
+  weight: 0
+  GCost: 0
+  HCost: 0
+  IsPath: 0
+  IsWater: 0
 --- !u!1001 &8364994470689488346
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -107,6 +115,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: hex_forest
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 21dffc7b525a33643ae7ea44e8684caf,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

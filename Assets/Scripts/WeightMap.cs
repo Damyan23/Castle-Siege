@@ -12,11 +12,11 @@ public class WeightMap
 
     // When there is water to cross it set the weight of couple of hexes that will act as bridges to low weight so that 
     // the pathfinder will use them
-    private GameObject[] watterTiles;
+    private List<GameObject> waterTiles = new();
+    public IReadOnlyList<GameObject> WaterTiles => waterTiles.AsReadOnly();
 
     public void GenerateWeightMap(GameObject[,] grid, int numberOfWaterTiles, int maxLengthOfWaterBody = 3)
     {
-        watterTiles = new GameObject[numberOfWaterTiles];
         int currectNumberOfWaterTiles = 0;
         int width = grid.GetLength(0);
         int height = grid.GetLength(1);
@@ -30,10 +30,9 @@ public class WeightMap
                     float randomValue = Random.value;
                     if (randomValue < 0.05f && (currectNumberOfWaterTiles < numberOfWaterTiles)) // 5% chance to be water
                     {
-                        Debug.Log("asd");
                         hexData.Weight = 1f; // Maximum weight for water
                         currectNumberOfWaterTiles++;
-                        watterTiles[currectNumberOfWaterTiles - 1] = grid[x, y];
+                        waterTiles.Add(grid[x, y]);
                         grid[x, y].GetComponentInChildren<Renderer>().material.color = Color.blue;
                     }
                     else
@@ -45,38 +44,47 @@ public class WeightMap
             }
         }
 
-        generateWaterBodies(maxLengthOfWaterBody);
+        //generateWaterBodies(maxLengthOfWaterBody);
     }
 
 
     // TODO: Figure out how to make the water body like a river, maybe add some variaty? Some bodies are like a lake, others are rivers?
     private void generateWaterBodies(int maxLengthOfWaterBody)
     {
-        foreach (GameObject waterTile in watterTiles)
+        List<GameObject> newWaterTiles = new();
+
+        foreach (GameObject waterTile in waterTiles)
         {
-            List<GameObject> waterBody = new();
+            GameObject currentTile = waterTile;
+
             for (int i = 0; i < maxLengthOfWaterBody; i++)
             {
-                List<GameObject> neighbours = waterTile.GetComponent<HexData>().getNeighbours();
-                // Select random neighbour
-                if (neighbours.Count == 0) break;
+                var currentData = currentTile.GetComponent<HexData>();
+                var neighbours = currentData.GetNeighbours();
 
-                GameObject randomNeightbour;
+                // Filter out invalid ones first
+                var validNeighbours = neighbours
+                    .Where(n => n != null && !n.IsWater && n.Weight != 1)
+                    .ToList();
 
-                do
-                {
-                    randomNeightbour = neighbours.ElementAt(Random.Range(0, neighbours.Count));
-                } while (!randomNeightbour && !waterBody.Contains(randomNeightbour) && randomNeightbour.GetComponent<HexData>().Weight != 1);
+                if (validNeighbours.Count == 0)
+                    break; // no valid expansion path
 
-                Debug.Log(waterBody.Count);
+                // Pick a random valid neighbor
+                var randomNeighbour = validNeighbours[Random.Range(0, validNeighbours.Count)];
 
-                waterBody.Add(randomNeightbour);
-                randomNeightbour.GetComponent<HexData>().Weight = 1;
-                randomNeightbour.GetComponentInChildren<Renderer>().material.color = Color.blue;
+                // Mark as water
+                randomNeighbour.Weight = 1;
+                randomNeighbour.GetComponentInChildren<Renderer>().material.color = Color.blue;
 
-                continue;
+                newWaterTiles.Add(randomNeighbour.gameObject);
+
+                // Continue expanding from this new tile
+                currentTile = randomNeighbour.gameObject;
             }
         }
 
+        waterTiles.AddRange(newWaterTiles);
     }
+
 }
